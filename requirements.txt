@@ -1,5 +1,5 @@
-streamlit==1.15.0
-opencv-python-headless==4.5.5.64
-numpy==1.21.6
-scikit-learn==1.0.2
-Pillow==8.4.0
+streamlit
+opencv-python-headless
+numpy
+scikit-learn
+Pillow
