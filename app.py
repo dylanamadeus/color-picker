@@ -20,17 +20,40 @@ def extract_dominant_colors(image, k=5):
 st.markdown(
     """
     <style>
+    .title {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 0.5em;
+    }
+    .description {
+        text-align: center;
+        font-size: 0.9em;
+        color: #666;
+        margin-bottom: 2em;
+    }
+    .color-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 20px;
+        justify-content: center;
+        align-items: center;
+        padding: 20px 0;
+    }
     .color-block {
-        display: inline-block;
-        width: 100px;
-        height: 100px;
-        margin-right: 10px;
-        border-radius: 5px;
-        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+        width: 120px;
+        height: 120px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease;
+    }
+    .color-block:hover {
+        transform: scale(1.05);
     }
     .color-label {
         margin-top: 10px;
         font-weight: bold;
+        text-align: center;
+        font-size: 14px;
     }
     </style>
     """,
@@ -38,7 +61,8 @@ st.markdown(
 )
 
 # Judul aplikasi
-st.title('Dominant Color Picker')
+st.markdown('<div class="title">Dylan Amadeus\'s Color Picker</div>', unsafe_allow_html=True)
+st.markdown('<div class="description">Upload an image to extract and display its dominant colors. This tool uses KMeans clustering to identify the most prominent colors in your image.</div>', unsafe_allow_html=True)
 
 # Unggah gambar
 uploaded_file = st.file_uploader("Choose an image...", type=["jpg", "jpeg", "png"])
@@ -47,9 +71,10 @@ if uploaded_file is not None:
     # Baca gambar
     file_bytes = np.asarray(bytearray(uploaded_file.read()), dtype=np.uint8)
     image = cv2.imdecode(file_bytes, 1)
+    image_rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)  # Convert BGR to RGB for correct display
 
     # Tampilkan gambar yang diunggah
-    st.image(image, caption='Uploaded Image.', use_column_width=True)
+    st.image(image_rgb, caption='Uploaded Image.', use_column_width=True)
     st.write("")
 
     # Ekstraksi warna dominan
